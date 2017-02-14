@@ -12,9 +12,9 @@ where aid in(
       select aid 
       from orders
       where cid in(
-		    select cid 
+            select cid 
             from customers
-		    where city = 'Kyoto'))
+            where city = 'Kyoto'))
 order by pid DESC;    
 
 select cid, name
@@ -43,7 +43,7 @@ where pid not in(
       where cid in (
             select cid
             from orders
-	        where aid = 'a08'))
+            where aid = 'a08'))
 order by pid DESC;
 
 select name, city, discount
