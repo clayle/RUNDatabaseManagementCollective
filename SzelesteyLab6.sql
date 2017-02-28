@@ -1,4 +1,5 @@
 -- Clayton Szelestey, 2/28/17, Database Management, Lab 6 --
+-- 1 --
 select c.name, c.city
 from customers c
 where c.city in (
@@ -8,32 +9,32 @@ where c.city in (
 	  order by count(*) DESC
 	  limit 1
 );
-
+-- 2 --
 select p.name
 from products p
 where p.priceUSD > (
       select AVG(p.priceUSD)
       from products p)
 order by p.name DESC;
-
+-- 3 --
 select c.name, o.pid, o.totalUSD
 from customers c, orders o
 where c.cid = o.cid
 order by o.totalUSD ASC;
-
+-- 4 --
 select c.name, coalesce(sum(o.qty), 0) as "total ordered"
 from orders o
 right outer join customers c on o.cid = c.cid
 group by c.name
 order by c.name ASC;
-
+-- 5 --
 select c.name, p.name, a.name
 from orders o
 inner join customers c on o.cid = c.cid
 inner join products p on o.pid = p.pid
 inner join agents a on o.aid = a.aid
 where a.city = 'Newark';
-
+-- 6 --
 select *
 from (
       select o.*, o.qty*p.priceUSD*(1-(c.discount/100)) as realUSD
@@ -41,7 +42,7 @@ from (
       inner join products p on o.pid = p.pid
       inner join customers c on o.cid = c.cid) as foo
 where totalUSD != realUSD;
-
+-- 7 --
 /* The difference between a left outer join and a right outer join is which table will be displayed
 in its entirety. A left outer join will display the entire left table and the corresponding parts from
 the right table even if the parts in the right table are null. It is the opposite for a right outer 
